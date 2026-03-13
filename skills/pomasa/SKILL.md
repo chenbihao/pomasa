@@ -103,6 +103,7 @@ Based on user requirements, determine which patterns to adopt:
   - **BHV-06 Configurable Tool Binding**: Adopt if user has configured custom web search or fetch tools
   - **BHV-08 Wiki Integration**: Adopt if user selects "Wiki" in Deliverable File Formats. When adopted, also adopt BHV-07 (Cumulative Project Library) since the wiki depends on the library for source tracking
   - **QUA-04 Observable Execution Logging**: Recommended; adopt by default. The user's **Observability Level** (`none` / `minimal` / `normal` / `detailed`) is an **independent field**, separate from the Quality Assurance Level—do not couple them. When adopted, generate `config.yml` and `scripts/log.sh` (see Step 3) and add a `## Logging` section to every Blueprint per QUA-04.
+  - **QUA-05 Estimation Method Validation**: Recommended; adopt when the system produces quantitative conclusions that may rely on estimation or inference from proxy data. When adopted, add the `estimation-methods.md` component to `references/methodology/` (STR-06's fifth component) and embed the three-stage validation gate (method validity, anchor consistency, confidence tier labeling) into every Blueprint that outputs figures.
 
 ### Step 2.5: Read All Required Patterns (Mandatory)
 
