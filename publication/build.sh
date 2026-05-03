@@ -30,6 +30,9 @@ cat > "$MD_OUTPUT" << 'EOF'
 
 XIONG Jie, East China Normal University
 
+\footnotesize
+Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee, provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. To copy otherwise, to republish, to post on servers, or to redistribute to lists requires prior specific permission. This paper was presented at the 12th Asian Conference on Pattern Languages of Programs, People \& Practices (AsianPLoP). © 2026 AsianPLoP'26, March 27--30, Yokohama, Japan. Copyright 2026 is held by the author(s). ISBN 978-1-941652-23-7.
+
 EOF
 
 # Append each section in order
