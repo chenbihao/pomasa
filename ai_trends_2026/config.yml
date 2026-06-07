@@ -1,0 +1,6 @@
+# POMASA project-level runtime configuration.
+# Introduced by QUA-04; extensible for future runtime config.
+# Blueprints READ values here but do not restate their meaning (avoids drift).
+
+# observability: none | minimal | normal | detailed
+observability: normal

@@ -1,0 +1,23 @@
+% Paragraph formatting — English: block-style, no indent
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+% Title formatting — larger than body text
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE\bfseries}{\thesection}{1em}{}[\vspace{0.3em}]
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
+
+% CJK font support for Chinese terms within English documents
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun} % 宋体
+\setCJKsansfont{SimHei} % 黑体
+\setCJKmonofont{FangSong} % 仿宋
+
+% Page setup
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+% Line spacing
+\usepackage{setspace}
+\onehalfspacing

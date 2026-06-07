@@ -1,0 +1,24 @@
+% 段落格式 — 中文：首行缩进两个字
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+
+% 标题格式 — 各级标题明显大于正文，居中
+\usepackage{titlesec}
+\titleformat{\section}{\LARGE\bfseries\centering}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bfseries\centering}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}
+
+% CJK字体支持
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun} % 宋体
+\setCJKsansfont{SimHei} % 黑体
+\setCJKmonofont{FangSong} % 仿宋
+
+% 页面设置
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+% 行距设置
+\usepackage{setspace}
+\onehalfspacing
