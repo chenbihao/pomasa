@@ -89,6 +89,15 @@ For the complete pattern list, see [pattern-catalog/README.md](./pattern-catalog
 - [x] Standard (default): Adopt QUA-01 Embedded Quality Standards + BHV-05 Grounded Web Research
 - [ ] Strict: Adopt QUA-01 + QUA-02 Multi-Layer Quality Assurance + BHV-05 Grounded Web Research
 
+**Observability Level** (QUA-04 Observable Execution Logging — independent of the Quality Assurance Level above):
+
+- [ ] none: No execution logs (saves tokens); the orchestrator still records acceptance verdicts only
+- [ ] minimal: Log errors only
+- [x] normal (default): Log errors + warnings (including agent degradations, scope reductions, and difficulties)
+- [ ] detailed: Log everything (including INFO milestones across the full chain)
+
+When adopted, the Generator creates `config.yml` (holding this level) and `scripts/log.sh`, and adds a logging section to each Blueprint.
+
 **Other Patterns to Enable or Disable**:
 
 [Fill in: If you have special requirements, explain here. If none, write "None"]

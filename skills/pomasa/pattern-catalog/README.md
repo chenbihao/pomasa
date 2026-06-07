@@ -114,6 +114,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
 | QUA-01 | [Embedded Quality Standards](./QUA-01-embedded-quality-standards.md) | Recommended | Embed quality standards in Agent blueprints |
 | QUA-02 | [Layered Quality Assurance](./QUA-02-layered-quality-assurance.md) | Optional | Multi-layered quality assurance mechanism |
 | QUA-03 | [Verifiable Data Lineage](./QUA-03-verifiable-data-lineage.md) | Required | End-to-end verifiable data lineage to prevent AI hallucination |
+| QUA-04 | [Observable Execution Logging](./QUA-04-observable-execution-logging.md) | Recommended | Persist execution events as structured JSONL logs, gated by a configurable observability level |
 
 ## Pattern Relationship Diagram
 
@@ -183,6 +184,15 @@ Patterns are grouped by category, identified by a three-letter prefix:
     │ Library       │       │ (Optional)    │
     └───────────────┘       └───────────────┘
      library/ feeds wiki/    wiki/ compounds
+
+    ┌───────────────┐       ┌───────────────────┐
+    │ QUA-03        │       │ QUA-04            │
+    │ Verifiable    │       │ Observable        │
+    │ Data Lineage  │       │ Execution Logging │
+    └───────────────┘       └───────────────────┘
+     data trustworthy        execution observable
+     (orthogonal & complementary; QUA-04 records the
+      Orchestrator's BHV-01 calls + acceptance verdicts)
 ```
 
 ## How to Use This Catalog
@@ -206,6 +216,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
 
 ## Version History
 
+- **v0.14** (2026-06): Added QUA-04 Observable Execution Logging for persisting execution events (degradations, difficulties, acceptance verdicts) as structured JSONL logs, gated by a configurable observability level; introduced `config.yml` as a shared project-level runtime configuration file
 - **v0.13** (2026-04): Added BHV-08 Wiki Integration for transforming research output into a persistent Obsidian knowledge graph with typed links
 - **v0.12** (2026-04): Added BHV-07 Cumulative Project Library for accumulating raw materials across multiple MAS runs
 - **v0.11** (2026-01): Replaced STR-07 with Reverse-Engineered Research Questions (practical alternative to the abstract conceptualization approach)

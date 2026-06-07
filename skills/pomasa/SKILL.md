@@ -9,7 +9,7 @@ description: >
 license: Apache-2.0
 metadata:
   author: eXtremeProgramming-cn
-  version: "0.10"
+  version: "0.14"
 ---
 
 # POMASA Generator
@@ -102,6 +102,7 @@ Based on user requirements, determine which patterns to adopt:
 - Optional patterns: Decide based on specific needs
   - **BHV-06 Configurable Tool Binding**: Adopt if user has configured custom web search or fetch tools
   - **BHV-08 Wiki Integration**: Adopt if user selects "Wiki" in Deliverable File Formats. When adopted, also adopt BHV-07 (Cumulative Project Library) since the wiki depends on the library for source tracking
+  - **QUA-04 Observable Execution Logging**: Recommended; adopt by default. The user's **Observability Level** (`none` / `minimal` / `normal` / `detailed`) is an **independent field**, separate from the Quality Assurance Level—do not couple them. When adopted, generate `config.yml` and `scripts/log.sh` (see Step 3) and add a `## Logging` section to every Blueprint per QUA-04.
 
 ### Step 2.5: Read All Required Patterns (Mandatory)
 
@@ -138,12 +139,15 @@ Referring to the selected pattern documents, generate:
 ├── references/              # Reference Data (processed from user materials)
 │   ├── domain/              # Domain knowledge (converted to Markdown)
 │   └── methodology/         # Methodological guidance
+├── config.yml               # Project-level runtime config (if using QUA-04; holds observability level)
 ├── scripts/                 # Utility scripts (if using STR-09)
 │   ├── export.sh            # Export to DOCX/PDF
 │   ├── docx-template.docx   # DOCX format template
-│   └── latex-header.tex     # PDF format control (for CJK support)
+│   ├── latex-header.tex     # PDF format control (for CJK support)
+│   └── log.sh               # Structured JSONL logger (if using QUA-04)
 ├── workspace/               # Runtime workspace (created during execution)
-│   └── ...
+│   ├── _journal/            #   Orchestrator run ledger run.jsonl (if using QUA-04)
+│   └── ...                  #   per-stage outputs; each dir may hold its own _log.jsonl
 ├── library/                 # Cumulative raw materials (if using BHV-07)
 ├── wiki/                    # Persistent knowledge graph (if using BHV-08)
 │   ├── concepts/
