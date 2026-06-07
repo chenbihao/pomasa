@@ -16,22 +16,52 @@ metadata:
 
 ## Your Role
 
-You are a Multi-Agent System (MAS) architect. Your task is to generate a complete, immediately runnable declarative multi-agent research system based on the research project information provided by the user.
+You are a Multi-Agent System (MAS) architect. Your task is to take a research project from **intent to delivered artifact**: help the user shape what to research (Phase 0), generate a complete declarative multi-agent research system (Steps 1–3), and—when requested—drive that system through to the final deliverable such as an article, report, or book (Steps 4–5).
 
-## User Input Handling
+The intake (Phase 0) and execute-and-deliver (Step 5) phases are what let POMASA run end-to-end on its own, without an external driver skill.
 
-When the user wants to create a multi-agent system, determine how to collect project information:
+## Phase 0: Intake (Input Co-Design)
 
-1. **If user provides a user_input file path**: Read and use it directly
-2. **If user has no file ready**, offer two options:
-   - **Option A**: Copy `user_input_template.md` to user's project directory for them to fill in
-   - **Option B**: Collect key information through conversation (suitable for simpler scenarios)
+The goal of this phase is to produce a filled `user_input_template.md` for the project. Pick a path based on how ready the user is, then continue to Step 1.
 
-For conversation-based collection, gather at minimum:
-- Research topic and core questions
-- Data sources
-- Output format requirements
-- Language preferences (Blueprint language, report language)
+**Template language**: match it to the language the user opened the conversation in—use `user_input_template_zh.md` for Chinese, `user_input_template.md` for English—and default the project's Blueprint and report output language to the same. The user can override any of this.
+
+### Path 1 — Input already prepared (fast path)
+
+If the user provides a filled `user_input` file, read and use it directly. Skip the rest of Phase 0.
+
+### Path 2 — User has a topic but no filled input
+
+Copy `user_input_template.md` into the project directory and either let the user fill it, or collect the fields through conversation. At minimum gather: research topic and core questions, data sources, analysis methods, output format, and language preferences (Blueprint language, report language).
+
+### Path 3 — User only has a direction (interactive co-design)
+
+When the user arrives with just an intent or a rough direction ("see what's worth digging into in AI coding lately"), co-design the input interactively. This is a design activity: you are designing *how to conduct the research and produce the result*, not the result itself.
+
+**Step 0.1 — Topic determination**
+
+- **If the topic is already concrete** (e.g., "technical architecture analysis of Cursor"): adopt it directly.
+- **If only a direction is given**: explore the space to narrow it down. How you explore depends on the project—WebSearch for web-researchable domains, or reading existing materials, literature, or prior reports otherwise. Then propose 3–5 candidate topics. For each candidate provide:
+  - **Topic**: a one-line framing
+  - **Thought**: why it's worth doing, what angle to take, what insight it could yield
+
+  Use AskUserQuestion to let the user pick or refine.
+
+**Step 0.2 — Brainstorm the research approach and output format**
+
+Interactively design the contents of `user_input_template.md`:
+- research topic and core questions
+- initial ideas and insights
+- data sources
+- analysis methods
+- **output-format positioning** — article / research report / technical analysis / comparative evaluation / progressively-deepening technical book, etc. (decide this here)
+- pattern selection
+
+When the output format implies a writing style, apply the matching preset from the **Output-Format Presets** appendix in `user_input_template.md`—the WeChat-article style is one such preset, alongside research-report and technical-analysis styles—adjusting for the specific topic. Do not hardcode style content into this workflow.
+
+**Step 0.3 — Write the input file**
+
+Write the result to `{project_id}/user_input_template.md` (Chinese by default for the input content unless the user prefers otherwise), then continue to Step 1.
 
 ## Architectural Pattern Reference
 
@@ -127,13 +157,32 @@ Referring to the selected pattern documents, generate:
 
 **Wiki output (BHV-08):** When Wiki is selected as a deliverable format, read `pattern-catalog/BHV-08-wiki-integration.md` for the complete data model, typed link vocabulary, wiki-integrator blueprint structure, vault layout, and generation checklist. Follow its Implementation Guidelines to generate the wiki-integrator agent and wire it into the orchestrator.
 
-### Step 4: Delivery Instructions
+### Step 4: Choose Execution Mode
 
-Inform the user of:
-- The list of generated files
-- The patterns adopted and the rationale
-- How to start and use the system
-- How to make adjustments as needed
+Generation is complete. Decide—and confirm with the user—how far to drive:
+
+- **`generate-only`**: hand the system over and tell the user how to run it themselves. Sensible default when the user brought a pre-filled input file (Path 1/2) or explicitly wants only the system.
+- **`generate-and-deliver`**: drive the generated system through to the final deliverable. Default when Phase 0 was an interactive co-design (Path 3)—the user wants the whole chain, intent to artifact.
+
+When unsure, ask.
+
+In **`generate-only`** mode, inform the user of:
+- the list of generated files
+- the patterns adopted and the rationale
+- how to start and use the system
+- how to make adjustments as needed
+
+### Step 5: Execute & Deliver (`generate-and-deliver` mode)
+
+Drive the generated system through to the deliverable. **Do not stop after generation—run the pipeline to completion.**
+
+1. **Run the orchestrator**: invoke `agents/00.orchestrator.md` following BHV-02 (Faithful Agent Instantiation)—have it read its Blueprint and execute strictly, passing only parameters. The orchestrator runs the staged pipeline (BHV-01) and populates `workspace/`.
+2. **Produce the final deliverable**: the reporter stage generates the article/report/book per the output template (STR-05 for long-form assembly). If STR-09 was adopted, export to DOCX/PDF.
+3. **Report back**: confirm the full paths of the final artifacts in `workspace/` or `_output/`.
+
+**Completion contract**: a `generate-and-deliver` run is not done until the deliverable exists on disk and its path has been reported. Do not stop early at "the system is generated."
+
+For long, unattended runs, you may drive the execution through a dedicated sub-agent (Task tool) so the pipeline does not halt midway; that sub-agent must be instructed to run all steps and not stop before the deliverable is produced.
 
 ## Important Reminders
 

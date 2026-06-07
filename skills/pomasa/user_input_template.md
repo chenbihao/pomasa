@@ -8,11 +8,11 @@ For items you are uncertain about, you can write "to be suggested by AI", and th
 
 ## Language Settings
 
-**Agent Blueprint Language**:
+**Agent Blueprint Language** (default: English):
 
 [Fill in: Chinese / English / Other]
 
-**Report Output Language**:
+**Report Output Language** (default: English):
 
 [Fill in: Chinese / English / Other]
 
@@ -70,8 +70,8 @@ List your reference materials below (file paths or URLs). The Generator will con
 **Deliverable File Formats**:
 
 - [x] Markdown (always generated)
-- [x] DOCX (recommended, for editing)
 - [x] PDF (recommended, for distribution)
+- [ ] DOCX (recommended, for editing)
 - [ ] Wiki (persistent Obsidian knowledge graph, for compounding research across runs)
 
 If DOCX/PDF are selected, the Generator will set up an export pipeline with templates (STR-09).
@@ -100,3 +100,14 @@ For the complete pattern list, see [pattern-catalog/README.md](./pattern-catalog
 *Advanced users: If you need to override the default web tool priorities, see [BHV-06 Configurable Tool Binding](./pattern-catalog/BHV-06-configurable-tool-binding.md).*
 
 [Fill in: Any other constraints, expectations, or special requirements. If none, write "None"]
+
+---
+
+## Output-Format Presets (reference)
+
+These are not fields to fill in. When the output format implies a particular writing style, the Generator applies the matching preset during Phase 0 intake. Treat them as starting points and adjust per topic.
+
+### Preset: Research Report / Technical Analysis
+
+No fixed style preset—determine the writing style during the Phase 0 brainstorming step, appropriate to the topic and audience.
+
