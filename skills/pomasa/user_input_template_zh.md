@@ -70,8 +70,8 @@
 **交付文件格式**：
 
 - [x] Markdown（始终生成）
-- [x] DOCX（推荐，便于编辑）
-- [x] PDF（推荐，便于分发）
+- [ ] PDF（推荐，便于分发）
+- [ ] DOCX（推荐，便于编辑）
 - [ ] Wiki（持久化的 Obsidian 知识图谱，用于跨次运行的研究积累）
 
 如果勾选了 DOCX/PDF，生成器将配置带有模板的导出流水线（STR-09）。
@@ -96,7 +96,7 @@
 - [x] normal（默认）：记录错误 + 警告（含 agent 的降级、缩范围、困难）
 - [ ] detailed：记录全部（含全链路 INFO 里程碑）
 
-采用时，生成器会创建 `config.yml`（保存该级别）与 `scripts/log.sh`，并在每个 Blueprint 中加入日志小节。
+采用时，生成器会创建 `config.yml`（保存该级别）与 `_observation/manager.sh`（统一的日志+状态记录器），并在每个 Blueprint 中加入观测小节。观测数据集中在 `_observation/` 下，含执行日志与各 agent 的状态快照。
 
 **需要启用或禁用的其他模式**：
 

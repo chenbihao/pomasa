@@ -114,7 +114,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
 | QUA-01 | [Embedded Quality Standards](./QUA-01-embedded-quality-standards.md) | Recommended | Embed quality standards in Agent blueprints |
 | QUA-02 | [Layered Quality Assurance](./QUA-02-layered-quality-assurance.md) | Optional | Multi-layered quality assurance mechanism |
 | QUA-03 | [Verifiable Data Lineage](./QUA-03-verifiable-data-lineage.md) | Required | End-to-end verifiable data lineage to prevent AI hallucination |
-| QUA-04 | [Observable Execution Logging](./QUA-04-observable-execution-logging.md) | Recommended | Persist execution events as structured JSONL logs, gated by a configurable observability level |
+| QUA-04 | [Observable Execution Logging](./QUA-04-observable-execution-logging.md) | Recommended | Record execution under one `_observation/` tree: append-only JSONL event logs plus self/assigned current-state snapshots, written by one dependency-free recorder, gated by a configurable observability level |
 | QUA-05 | [Estimation Method Validation](./QUA-05-estimation-method-validation.md) | Recommended | Three-stage validation gate for quantitative estimates: method validity, anchor consistency, confidence tier labeling |
 
 ## Pattern Relationship Diagram
@@ -193,7 +193,9 @@ Patterns are grouped by category, identified by a three-letter prefix:
     └───────────────┘       └───────────────────┘
      data trustworthy        execution observable
      (orthogonal & complementary; QUA-04 records the
-      Orchestrator's BHV-01 calls + acceptance verdicts)
+      Orchestrator's BHV-01 calls + acceptance verdicts
+      under _observation/: JSONL event logs + self/assigned
+      current-state snapshots, best-effort, never control plane)
 
     ┌───────────────┐       ┌───────────────────┐
     │ STR-06        │──────▶│ QUA-05            │
@@ -225,6 +227,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
 
 ## Version History
 
+- **v0.16** (2026-06): Extended QUA-04 from logging to full execution observation (Observation Schema 1.1): consolidated all observation under one `_observation/` tree (sibling of `workspace/`), unified the recorder into a single dependency-free `manager.sh` with `log` + `status` subcommands, added self/assigned current-state snapshots (`.json`) alongside the append-only event logs (`.jsonl`), introduced `run_manifest.json` and state-derivation rules (fold `run.jsonl` in append order; manifest supplies the planned-stage list for `pending`), and added `stage_enter`/`stage_exit` ledger events—all kept best-effort and never a control plane
 - **v0.15** (2026-06): Added QUA-05 Estimation Method Validation (three-stage gate for quantitative estimates: method validity, anchor consistency, confidence tier labeling); extended STR-06 with a fifth component (estimation-methods.md); added Quantitative Analysis Standards and Analytical Derivation Standards dimensions to QUA-01
 - **v0.14** (2026-06): Added QUA-04 Observable Execution Logging for persisting execution events (degradations, difficulties, acceptance verdicts) as structured JSONL logs, gated by a configurable observability level; introduced `config.yml` as a shared project-level runtime configuration file
 - **v0.13** (2026-04): Added BHV-08 Wiki Integration for transforming research output into a persistent Obsidian knowledge graph with typed links
