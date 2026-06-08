@@ -114,7 +114,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
 | QUA-01 | [Embedded Quality Standards](./QUA-01-embedded-quality-standards.md) | Recommended | Embed quality standards in Agent blueprints |
 | QUA-02 | [Layered Quality Assurance](./QUA-02-layered-quality-assurance.md) | Optional | Multi-layered quality assurance mechanism |
 | QUA-03 | [Verifiable Data Lineage](./QUA-03-verifiable-data-lineage.md) | Required | End-to-end verifiable data lineage to prevent AI hallucination |
-| QUA-04 | [Observable Execution Logging](./QUA-04-observable-execution-logging.md) | Recommended | Record execution under one `_observation/` tree: append-only JSONL event logs plus self/assigned current-state snapshots, written by one dependency-free recorder, gated by a configurable observability level |
+| QUA-04 | [Observable Execution Logging](./QUA-04-observable-execution-logging.md) | Required | Record execution under one `_observation/` tree via unified `checkpoint` command (event + optional state snapshot); `init` creates directory tree + manifest; `_fallback/` catches unrecognized keys; best-effort, gated by configurable observability level |
 | QUA-05 | [Estimation Method Validation](./QUA-05-estimation-method-validation.md) | Recommended | Three-stage validation gate for quantitative estimates: method validity, anchor consistency, confidence tier labeling |
 
 ## Pattern Relationship Diagram
@@ -214,7 +214,7 @@ Patterns are grouped by category, identified by a three-letter prefix:
    - COR-01, COR-02 (Core)
    - STR-01, STR-06 (Structure)
    - BHV-02 (Behavior)
-   - QUA-03 (Quality)
+   - QUA-03, QUA-04 (Quality)
 2. **Evaluate Recommended Patterns**: Assess whether each "Recommended" pattern applies based on system requirements
 3. **Select Optional Patterns**: Choose appropriate "Optional" patterns based on specific scenarios
 4. **Combined Application**: Refer to the pattern relationship diagram to ensure related patterns work together
@@ -227,6 +227,8 @@ Patterns are grouped by category, identified by a three-letter prefix:
 
 ## Version History
 
+- **v0.18** (2026-06): Promoted QUA-04 Observable Execution Logging from Recommended to Required; updated SKILL.md to move QUA-04 into the mandatory pattern-reading table (Step 2.5) and made `config.yml` / `_observation/` unconditional in the directory layout
+- **v0.17** (2026-06): QUA-04 API redesign based on `ai_trends_2026` run review: merged `log` + `status` into single `checkpoint` command (`--state` optional; always logs event, conditionally updates status); added `init` subcommand for manifest + directory creation (eliminates hand-written format errors); added `_fallback/` for unrecognized keys (observation data never silently lost); removed `schema_version` (script is the schema); removed `.gitignore` generation (user's concern)
 - **v0.16** (2026-06): Extended QUA-04 from logging to full execution observation (Observation Schema 1.1): consolidated all observation under one `_observation/` tree (sibling of `workspace/`), unified the recorder into a single dependency-free `manager.sh` with `log` + `status` subcommands, added self/assigned current-state snapshots (`.json`) alongside the append-only event logs (`.jsonl`), introduced `run_manifest.json` and state-derivation rules (fold `run.jsonl` in append order; manifest supplies the planned-stage list for `pending`), and added `stage_enter`/`stage_exit` ledger events—all kept best-effort and never a control plane
 - **v0.15** (2026-06): Added QUA-05 Estimation Method Validation (three-stage gate for quantitative estimates: method validity, anchor consistency, confidence tier labeling); extended STR-06 with a fifth component (estimation-methods.md); added Quantitative Analysis Standards and Analytical Derivation Standards dimensions to QUA-01
 - **v0.14** (2026-06): Added QUA-04 Observable Execution Logging for persisting execution events (degradations, difficulties, acceptance verdicts) as structured JSONL logs, gated by a configurable observability level; introduced `config.yml` as a shared project-level runtime configuration file

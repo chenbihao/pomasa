@@ -96,7 +96,7 @@
 - [x] normal（默认）：记录错误 + 警告（含 agent 的降级、缩范围、困难）
 - [ ] detailed：记录全部（含全链路 INFO 里程碑）
 
-采用时，生成器会创建 `config.yml`（保存该级别）与 `_observation/manager.sh`（统一的日志+状态记录器），并在每个 Blueprint 中加入观测小节。观测数据集中在 `_observation/` 下，含执行日志与各 agent 的状态快照。
+生成器会创建 `config.yml`（保存该级别）与 `_observation/manager.sh`（统一的日志+状态记录器），并在每个 Blueprint 中加入观测小节。观测数据集中在 `_observation/` 下，含执行日志与各 agent 的状态快照。
 
 **需要启用或禁用的其他模式**：
 

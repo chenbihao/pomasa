@@ -102,7 +102,6 @@ Based on user requirements, determine which patterns to adopt:
 - Optional patterns: Decide based on specific needs
   - **BHV-06 Configurable Tool Binding**: Adopt if user has configured custom web search or fetch tools
   - **BHV-08 Wiki Integration**: Adopt if user selects "Wiki" in Deliverable File Formats. When adopted, also adopt BHV-07 (Cumulative Project Library) since the wiki depends on the library for source tracking
-  - **QUA-04 Observable Execution Logging**: Recommended; adopt by default. The user's **Observability Level** (`none` / `minimal` / `normal` / `detailed`) is an **independent field**, separate from the Quality Assurance Level—do not couple them. When adopted, generate `config.yml`, copy `_observation/manager.sh` verbatim, and add an `## Observation` section to every Blueprint per QUA-04 (see Step 3). Observation covers both **logs** (append-only `.jsonl` event streams) and **status** (self/assigned current-state `.json` snapshots), all under one `_observation/` tree written by the single `manager.sh` recorder.
   - **QUA-05 Estimation Method Validation**: Recommended; adopt when the system produces quantitative conclusions that may rely on estimation or inference from proxy data. When adopted, add the `estimation-methods.md` component to `references/methodology/` (STR-06's fifth component) and embed the three-stage validation gate (method validity, anchor consistency, confidence tier labeling) into every Blueprint that outputs figures.
 
 ### Step 2.5: Read All Required Patterns (Mandatory)
@@ -117,6 +116,7 @@ Based on user requirements, determine which patterns to adopt:
 | STR-06 | Methodological Guidance | **What files go in methodology/ (read together with STR-01)** |
 | BHV-02 | Faithful Agent Instantiation | **How Orchestrator invokes other Agents (critical!)** |
 | QUA-03 | Verifiable Data Lineage | Data traceability requirements |
+| QUA-04 | Observable Execution Logging | Observability Level (`none`/`minimal`/`normal`/`detailed`) is independent from QA level; generate `config.yml`, copy `_observation/manager.sh` verbatim, add `## Observation` section to every Blueprint; recorder: `init` (directory tree + manifest) and `checkpoint` (unified event + optional state snapshot); `_fallback/` catches unrecognized keys |
 
 **Special Emphasis on BHV-02**: This pattern defines the standard format for how the Orchestrator invokes subagents:
 - Caller only passes parameters, never paraphrases Blueprint content
@@ -140,17 +140,18 @@ Referring to the selected pattern documents, generate:
 ├── references/              # Reference Data (processed from user materials)
 │   ├── domain/              # Domain knowledge (converted to Markdown)
 │   └── methodology/         # Methodological guidance
-├── config.yml               # Project-level runtime config (if using QUA-04; holds observability level)
+├── config.yml               # Project-level runtime config (holds observability level)
 ├── scripts/                 # Utility scripts (if using STR-09)
 │   ├── export.sh            # Export to DOCX/PDF
 │   ├── docx-template.docx   # DOCX format template
 │   └── latex-header.tex     # PDF format control (for CJK support)
-├── _observation/            # Execution observation (if using QUA-04; gitignore _observation/*/)
-│   ├── manager.sh           #   the single write-only recorder (log + status), copied verbatim
+├── _observation/            # Execution observation
+│   ├── manager.sh           #   the write-only recorder (init + checkpoint), copied verbatim
 │   └── {INSTANCE}/          #   one run (omitted for one-shot systems)
-│       ├── run_manifest.json    # static stage plan, written once by the Orchestrator
+│       ├── run_manifest.json    # static stage plan, created by manager.sh init
 │       ├── 00.orchestrator/     # O-only: run.jsonl ledger + assigned/{KEY}.json status
-│       └── {KEY}/               # agent-only: _log.jsonl + status.json
+│       ├── {KEY}/               # agent-only: _log.jsonl + status.json
+│       └── _fallback/           # unrecognized keys land here (not silently dropped)
 ├── workspace/               # Runtime workspace (deliverables only; created during execution)
 │   └── ...                  #   per-stage outputs
 ├── library/                 # Cumulative raw materials (if using BHV-07)

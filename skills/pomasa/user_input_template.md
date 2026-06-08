@@ -96,7 +96,7 @@ For the complete pattern list, see [pattern-catalog/README.md](./pattern-catalog
 - [x] normal (default): Log errors + warnings (including agent degradations, scope reductions, and difficulties)
 - [ ] detailed: Log everything (including INFO milestones across the full chain)
 
-When adopted, the Generator creates `config.yml` (holding this level) and `_observation/manager.sh` (the unified log + status recorder), and adds an observation section to each Blueprint. All observation data lives under `_observation/`, covering both execution logs and per-agent status snapshots.
+The Generator creates `config.yml` (holding this level) and `_observation/manager.sh` (the unified log + status recorder), and adds an observation section to each Blueprint. All observation data lives under `_observation/`, covering both execution logs and per-agent status snapshots.
 
 **Other Patterns to Enable or Disable**:
 

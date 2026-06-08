@@ -1,5 +1,0 @@
-# Keep _observation/manager.sh; ignore the run data under it
-_observation/manager.sh/
-
-# Ignore output directory
-_output/
