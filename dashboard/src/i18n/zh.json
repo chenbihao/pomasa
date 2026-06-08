@@ -1,0 +1,141 @@
+{
+  "app": {
+    "title": "POMASA 仪表盘"
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "viewer": "浏览",
+    "create": "创建",
+    "terminal": "终端"
+  },
+  "dashboard": {
+    "totalProjects": "项目总数",
+    "running": "运行中",
+    "completed": "已完成",
+    "withAlerts": "有告警",
+    "noProjects": "未找到项目",
+    "setWorkDir": "请先设置工作目录",
+    "loading": "加载项目中...",
+    "stages": "阶段",
+    "lastUpdate": "最后更新",
+    "hasAlerts": "有警告或错误",
+    "noObs": "无观测"
+  },
+  "project": {
+    "instance": "实例",
+    "pipeline": "流水线",
+    "events": "事件",
+    "status": "状态",
+    "back": "返回仪表盘",
+    "loading": "加载项目数据中...",
+    "failed": "加载项目数据失败",
+    "created": "创建时间",
+    "hasAlerts": "有告警",
+    "running": "运行中",
+    "statusLegend": "状态图例",
+    "assigned": "已分配（编排器）",
+    "self": "自报告（智能体）",
+    "lastUpdate": "最后更新",
+    "log": "日志",
+    "orchestratorLog": "编排器日志",
+    "agentLog": "智能体日志",
+    "noLogEntries": "该智能体暂无日志",
+    "divergent": "分歧",
+    "depends": "依赖",
+    "viewLog": "查看智能体日志",
+    "notStarted": "该项目尚未启动",
+    "notStartedHint": "运行编排器后将自动生成流水线清单"
+  },
+  "pipeline": {
+    "orchestrator": "编排器",
+    "done": "完成",
+    "active": "活跃"
+  },
+  "viewer": {
+    "selectFile": "选择文件查看",
+    "setWorkDir": "请设置工作目录或导航到指定路径",
+    "loading": "加载中...",
+    "expandAll": "全部展开",
+    "collapseAll": "全部折叠",
+    "locateFile": "定位当前文件"
+  },
+  "create": {
+    "title": "创建新 MAS",
+    "location": "位置",
+    "parentDir": "父目录",
+    "masName": "MAS 名称",
+    "language": "语言设置",
+    "blueprintLang": "智能体蓝图语言",
+    "reportLang": "报告输出语言",
+    "research": "研究项目",
+    "topic": "研究主题与核心问题",
+    "topicPlaceholder": "你想研究什么问题？希望解答哪些核心问题？",
+    "ideas": "初步想法与洞察",
+    "ideasPlaceholder": "你对该问题的现有认知、初步假设、研究方向等",
+    "dataCollection": "数据收集",
+    "dataSources": "数据来源",
+    "dataSourcesPlaceholder": "公开的网络信息、学术文献、政策文件、API 接口等",
+    "existingReferences": "现有参考资料",
+    "existingReferencesPlaceholder": "/path/to/document.pdf\nhttps://example.com/article",
+    "analysisOutput": "分析与输出",
+    "analysisMethods": "分析方法",
+    "analysisMethodsSection": "分析方法",
+    "outputFormatSection": "输出格式",
+    "deliverableFormats": "交付文件格式",
+    "deliverableFormatsHint": "Markdown 始终生成；勾选 PDF/DOCX 会配置导出流水线；勾选 Wiki 会创建知识图谱",
+    "reportFormat": "报告格式",
+    "reportStructure": "报告结构",
+    "patternSelection": "模式选择",
+    "qualityLevel": "质量保证级别",
+    "qualitySimple": "简单 - 仅采用必需的模式",
+    "qualityStandard": "标准 - 内嵌质量标准",
+    "qualityStrict": "严格 - 多层质量保证",
+    "observability": "可观测性级别",
+    "patternOverrides": "需要启用或禁用的其他模式",
+    "patternOverridesPlaceholder": "如果有特殊需求请说明，否则填写'无'",
+    "other": "其他要求",
+    "otherPlaceholder": "任何其他限制、期望或特殊要求",
+    "next": "下一步：选择模式",
+    "cancel": "取消",
+    "selectPatterns": "选择模式",
+    "createMas": "创建 MAS",
+    "back": "返回",
+    "creating": "正在创建 MAS...",
+    "processing": "处理中...",
+    "viewCreated": "查看创建的 MAS",
+    "backToDashboard": "返回仪表盘",
+    "fillRequired": "请填写目标目录、项目标识符和研究主题",
+    "patterns": "模式"
+  },
+  "terminal": {
+    "connected": "已连接",
+    "disconnected": "已断开",
+    "reconnect": "重新连接"
+  },
+  "status": {
+    "pending": "待处理",
+    "running": "运行中",
+    "done": "完成",
+    "completed": "已完成",
+    "failed": "失败",
+    "timedOut": "超时",
+    "error": "错误",
+    "superseded": "已替代",
+    "unknown": "未知"
+  },
+  "events": {
+    "allAgents": "所有代理",
+    "allLevels": "所有级别",
+    "eventsCount": "条事件",
+    "noEvents": "无事件",
+    "blueprint": "蓝图"
+  },
+  "workDir": {
+    "notSet": "未设置",
+    "change": "点击修改工作目录"
+  },
+  "common": {
+    "save": "保存",
+    "cancel": "取消"
+  }
+}

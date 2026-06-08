@@ -1,0 +1,141 @@
+{
+  "app": {
+    "title": "POMASA Dashboard"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "viewer": "Viewer",
+    "create": "Create",
+    "terminal": "Terminal"
+  },
+  "dashboard": {
+    "totalProjects": "Total Projects",
+    "running": "Running",
+    "completed": "Completed",
+    "withAlerts": "With Alerts",
+    "noProjects": "No projects found",
+    "setWorkDir": "Please set a work directory first",
+    "loading": "Loading projects...",
+    "stages": "stages",
+    "lastUpdate": "Last update",
+    "hasAlerts": "Has warnings or errors",
+    "noObs": "No obs"
+  },
+  "project": {
+    "instance": "Instance",
+    "pipeline": "Pipeline",
+    "events": "Events",
+    "status": "Status",
+    "back": "Back to Dashboard",
+    "loading": "Loading project data...",
+    "failed": "Failed to load project data",
+    "created": "Created",
+    "hasAlerts": "Has alerts",
+    "running": "running",
+    "statusLegend": "Status Legend",
+    "assigned": "Assigned (Orchestrator)",
+    "self": "Self (Agent)",
+    "lastUpdate": "Last Update",
+    "log": "Log",
+    "orchestratorLog": "Orchestrator Log",
+    "agentLog": "Agent Log",
+    "noLogEntries": "No log entries for this agent",
+    "divergent": "divergent",
+    "depends": "depends",
+    "viewLog": "View agent log",
+    "notStarted": "This project has not been started yet",
+    "notStartedHint": "Run the orchestrator to generate the pipeline manifest"
+  },
+  "pipeline": {
+    "orchestrator": "Orchestrator",
+    "done": "done",
+    "active": "active"
+  },
+  "viewer": {
+    "selectFile": "Select a file to view",
+    "setWorkDir": "Please set a work directory or navigate to a path",
+    "loading": "Loading...",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All",
+    "locateFile": "Locate Current File"
+  },
+  "create": {
+    "title": "Create New MAS",
+    "location": "Location",
+    "parentDir": "Parent Directory",
+    "masName": "MAS Name",
+    "language": "Language Settings",
+    "blueprintLang": "Agent Blueprint Language",
+    "reportLang": "Report Output Language",
+    "research": "Research Project",
+    "topic": "Research Topic & Core Questions",
+    "topicPlaceholder": "What do you want to research? What core questions do you want to answer?",
+    "ideas": "Initial Ideas & Insights",
+    "ideasPlaceholder": "Your existing understanding, initial hypotheses, research directions...",
+    "dataCollection": "Data Collection",
+    "dataSources": "Data Sources",
+    "dataSourcesPlaceholder": "Public web information, academic literature, policy documents, APIs, etc.",
+    "existingReferences": "Existing Reference Materials",
+    "existingReferencesPlaceholder": "/path/to/document.pdf\nhttps://example.com/article",
+    "analysisOutput": "Analysis & Output",
+    "analysisMethods": "Analysis Methods",
+    "analysisMethodsSection": "Analysis Methods",
+    "outputFormatSection": "Output Format",
+    "deliverableFormats": "Deliverable File Formats",
+    "deliverableFormatsHint": "Markdown always generated; PDF/DOCX sets up export pipeline; Wiki creates knowledge graph",
+    "reportFormat": "Report Format",
+    "reportStructure": "Report Structure",
+    "patternSelection": "Pattern Selection",
+    "qualityLevel": "Quality Assurance Level",
+    "qualitySimple": "Simple - Only required patterns",
+    "qualityStandard": "Standard - Embedded quality standards",
+    "qualityStrict": "Strict - Multi-layer quality assurance",
+    "observability": "Observability Level",
+    "patternOverrides": "Other patterns to enable or disable",
+    "patternOverridesPlaceholder": "If you have special requirements, otherwise fill in 'None'",
+    "other": "Other Requirements",
+    "otherPlaceholder": "Any other constraints, expectations, or special requirements",
+    "next": "Next: Select Patterns",
+    "cancel": "Cancel",
+    "selectPatterns": "Select Patterns",
+    "createMas": "Create MAS",
+    "back": "Back",
+    "creating": "Creating MAS...",
+    "processing": "Processing...",
+    "viewCreated": "View Created MAS",
+    "backToDashboard": "Back to Dashboard",
+    "fillRequired": "Please fill in target directory, project identifier, and research topic",
+    "patterns": "Patterns"
+  },
+  "terminal": {
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "reconnect": "Reconnect"
+  },
+  "status": {
+    "pending": "Pending",
+    "running": "Running",
+    "done": "Done",
+    "completed": "Completed",
+    "failed": "Failed",
+    "timedOut": "Timed Out",
+    "error": "Error",
+    "superseded": "Superseded",
+    "unknown": "Unknown"
+  },
+  "events": {
+    "allAgents": "All agents",
+    "allLevels": "All levels",
+    "eventsCount": "events",
+    "noEvents": "No events",
+    "blueprint": "Blueprint"
+  },
+  "workDir": {
+    "notSet": "Not set",
+    "change": "Click to change work directory"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}
