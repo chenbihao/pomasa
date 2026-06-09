@@ -1,4 +1,4 @@
-import { Play, CheckCircle, XCircle, Clock, AlertTriangle, Ban, Info } from 'lucide-react'
+import { Play, CheckCircle, XCircle, Clock, AlertTriangle, Ban, Info, ArrowRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface StatusConfig {
@@ -25,6 +25,22 @@ export const statusColors: Record<string, StatusConfig> = {
     border: 'border-gray-200',
     hex: '#6b7280',
     labelKey: 'status.pending',
+  },
+  preparing: {
+    icon: Play,
+    color: 'text-amber-600',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    hex: '#d97706',
+    labelKey: 'status.preparing',
+  },
+  ready: {
+    icon: ArrowRight,
+    color: 'text-blue-500',
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
+    hex: '#3b82f6',
+    labelKey: 'status.ready',
   },
   running: {
     icon: Play,

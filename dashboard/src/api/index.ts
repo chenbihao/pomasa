@@ -1,4 +1,4 @@
-import type { ProjectInfo, Manifest, AgentStatus, LogEvent, Pattern, FileNode } from '../types'
+import type { ProjectInfo, Manifest, AgentStatus, LogEvent, Pattern, FileNode, AgentBlueprint, ProjectConfig } from '../types'
 
 const API_BASE = '/api'
 
@@ -34,6 +34,27 @@ export async function fetchSubDirs(dirPath: string): Promise<{ name: string; pat
   return data.dirs
 }
 
+export async function fetchDirFingerprints(dirPath: string): Promise<Record<string, number>> {
+  try {
+    const data = await fetchJson<{ fingerprints: Record<string, number> }>(
+      `${API_BASE}/fs/changes?path=${encodeURIComponent(dirPath)}`
+    )
+    return data.fingerprints
+  } catch {
+    return {}
+  }
+}
+
+export async function fetchFileStat(filePath: string): Promise<{ mtimeMs: number; size: number } | null> {
+  try {
+    return await fetchJson<{ mtimeMs: number; size: number }>(
+      `${API_BASE}/fs/stat?path=${encodeURIComponent(filePath)}`
+    )
+  } catch {
+    return null
+  }
+}
+
 // ========== Projects API ==========
 
 export async function fetchProjects(workdir: string): Promise<ProjectInfo[]> {
@@ -50,17 +71,27 @@ export async function fetchManifest(name: string, workdir: string): Promise<Mani
 }
 
 export async function fetchAgentStatuses(name: string, workdir: string): Promise<Record<string, AgentStatus>> {
-  const data = await fetchJson<{ agents: Record<string, AgentStatus> }>(
-    `${API_BASE}/projects/${encodeURIComponent(name)}/status?workdir=${encodeURIComponent(workdir)}`
-  )
-  return data.agents
+  try {
+    const data = await fetchJson<{ agents: Record<string, AgentStatus> }>(
+      `${API_BASE}/projects/${encodeURIComponent(name)}/status?workdir=${encodeURIComponent(workdir)}`
+    )
+    return data.agents
+  } catch {
+    // Project may not have status yet (e.g., still preparing)
+    return {}
+  }
 }
 
 export async function fetchEvents(name: string, workdir: string): Promise<LogEvent[]> {
-  const data = await fetchJson<{ events: LogEvent[] }>(
-    `${API_BASE}/projects/${encodeURIComponent(name)}/events?workdir=${encodeURIComponent(workdir)}`
-  )
-  return data.events
+  try {
+    const data = await fetchJson<{ events: LogEvent[] }>(
+      `${API_BASE}/projects/${encodeURIComponent(name)}/events?workdir=${encodeURIComponent(workdir)}`
+    )
+    return data.events
+  } catch {
+    // Project may not have events yet (e.g., still preparing)
+    return []
+  }
 }
 
 export async function fetchAgentLogs(name: string, agentKey: string, workdir: string): Promise<LogEvent[]> {
@@ -68,6 +99,38 @@ export async function fetchAgentLogs(name: string, agentKey: string, workdir: st
     `${API_BASE}/projects/${encodeURIComponent(name)}/logs/${agentKey}?workdir=${encodeURIComponent(workdir)}`
   )
   return data.logs
+}
+
+export async function fetchAgentBlueprints(name: string, workdir: string): Promise<AgentBlueprint[]> {
+  try {
+    const data = await fetchJson<{ agents: AgentBlueprint[] }>(
+      `${API_BASE}/projects/${encodeURIComponent(name)}/agents?workdir=${encodeURIComponent(workdir)}`
+    )
+    return data.agents
+  } catch {
+    return []
+  }
+}
+
+export async function fetchProjectFileTree(name: string, section: string, workdir: string): Promise<FileNode[]> {
+  try {
+    const data = await fetchJson<{ tree: FileNode[] }>(
+      `${API_BASE}/projects/${encodeURIComponent(name)}/files/${section}?workdir=${encodeURIComponent(workdir)}`
+    )
+    return data.tree
+  } catch {
+    return []
+  }
+}
+
+export async function fetchProjectConfig(name: string, workdir: string): Promise<ProjectConfig> {
+  try {
+    return await fetchJson<ProjectConfig>(
+      `${API_BASE}/projects/${encodeURIComponent(name)}/config?workdir=${encodeURIComponent(workdir)}`
+    )
+  } catch {
+    return { config: null, readme: null, template: null }
+  }
 }
 
 // ========== Framework API ==========
