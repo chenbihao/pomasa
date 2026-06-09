@@ -124,7 +124,14 @@ Based on user requirements, determine which patterns to adopt:
 - Must use standard invocation wording: "Please read `agents/XX.xxx.md` and execute strictly according to that Blueprint, parameters:..."
 - Orchestrator must verify results against Blueprint completion criteria
 
-**Do NOT skip this step.** Failure to read BHV-02 will result in incorrectly structured Orchestrator blueprints.
+**Special Emphasis on QUA-04**: When generating the Orchestrator Blueprint, ensure it includes the complete observation lifecycle:
+- Call `init` once at run start (creates directory tree + `run_manifest.json`)
+- Log `agent_call` BEFORE each subagent invocation (dispatch event)
+- Log `stage_verdict` AFTER each acceptance check (verification result)
+- Update `assigned` status to `done` at each stage boundary
+- After generating the Orchestrator Blueprint, verify against QUA-04's Generation Checklist (line 409-419 in the pattern document)
+
+**Do NOT skip this step.** Failure to read BHV-02 will result in incorrectly structured Orchestrator blueprints; failure to follow QUA-04's checklist will result in incomplete observation logging.
 
 ### Step 3: Generate the System
 
