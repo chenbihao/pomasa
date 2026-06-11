@@ -58,3 +58,5 @@ QUA-04 把 journal 定性为 "best-effort observability, **never a control plane
 4. 按 CLAUDE.md 约定同步四处：pattern-catalog/README.md 的 Pattern Overview 表、关系图、Version History、SKILL.md。
 
 **触发条件**：当出现"长流程频繁因中断而整轮重跑"的实际痛点，或 STR-10 落地后即可一并规划。
+
+---

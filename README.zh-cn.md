@@ -4,9 +4,26 @@
 
 [ [EN](./README.md) | 中文 ]
 
-> Fork 自 [eXtremeProgramming-cn/pomasa](https://github.com/eXtremeProgramming-cn/pomasa)。本仓库为个人 fork，原项目请见上游仓库。
+> Fork 自 [eXtremeProgramming-cn/pomasa](https://github.com/eXtremeProgramming-cn/pomasa)。本 fork 在原项目基础上新增了可观测性模式和 Web 控制面板。
+
+## 本 Fork 的改进
+
+相比上游仓库，本 fork 新增了：
+
+- **[QUA-04 可观测性执行日志](./skills/pomasa/pattern-catalog/QUA-04-observable-execution-logging.md)** — 一个新的质量模式，定义了如何在 MAS 运行期间持久化结构化事件日志和智能体状态，支持事后调试、实时进度监控和静默降级检测。
+- **[POMASA Dashboard 控制面板](./dashboard/)** — 基于 Web 的可视化监控面板（React + TypeScript + Vite + Tailwind CSS），用于观察和管理多智能体系统的执行。主要功能包括：
+  - Pipeline DAG 可视化（ReactFlow）
+  - 实时事件时间线
+  - 内置终端（xterm.js + node-pty）
+  - Markdown 查看器（Milkdown）
+  - 国际化支持（中/英文）
+  - CLI 启动器（`npx @chenbihao/pomasa-dashboard`）
+
+  ![POMASA Dashboard](./images/dashboard-zh-cn.png)
 
 ## 极简使用教程
+
+将 POMASA 作为智能体技能安装
 
 ```bash
 npx add-skill chenbihao/pomasa
@@ -44,7 +61,7 @@ POMASA 采用"模式语言 + 生成器"的方法：
 
 ### 架构概览
 
-![POMASA 架构](./pomasa-explained-zh-cn-v2.1.png)
+![POMASA 架构](./images/pomasa-explained-zh-cn-v2.1.png)
 
 POMASA 模式分为四个类别（如左侧所示），管理三个架构层：
 
@@ -73,7 +90,11 @@ pomasa/
 │           ├── COR-01-...
 │           ├── STR-01-...
 │           ├── BHV-01-...
-│           └── QUA-01-...
+│           └── QUA-04-observable-execution-logging.md  # ← 本 fork 新增
+├── dashboard/                    # ← 新增：Web 控制面板（React + Vite）
+│   ├── src/                      #    前端源码
+│   ├── server/                   #    后端（Express + WebSocket）
+│   └── package.json
 └── references/                   # 背景阅读材料
     ├── declarative-multi-agent-architecture-part1-en.md
     └── declarative-multi-agent-architecture-part2-en.md
@@ -110,6 +131,16 @@ npx add-skill chenbihao/pomasa
 2. 阅读 pattern-catalog 中的相关模式
 3. 根据你的需求选择合适的模式组合
 4. 生成完整的系统文件
+
+### POMASA Dashboard 控制面板
+
+启动 Web 控制面板，可视化监控 MAS 执行：
+
+```bash
+npx @chenbihao/pomasa-dashboard
+```
+
+控制面板将在 `http://localhost:3001` 启动。使用 `--port` 指定自定义端口。
 
 ### 场景：理解或改进现有系统
 

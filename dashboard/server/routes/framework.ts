@@ -4,9 +4,35 @@ import fs from 'fs/promises'
 
 const router = Router()
 
+/**
+ * Search for skills/pomasa/ directory starting from cwd and going up.
+ * Returns the resolved path or null if not found.
+ */
+async function findSkillsDir(): Promise<string | null> {
+  let dir = process.cwd()
+  for (let i = 0; i < 5; i++) {
+    const candidate = path.join(dir, 'skills', 'pomasa')
+    try {
+      await fs.access(candidate)
+      return candidate
+    } catch {
+      // Not found at this level, try parent
+    }
+    const parent = path.dirname(dir)
+    if (parent === dir) break
+    dir = parent
+  }
+  return null
+}
+
 // Get patterns list from POMASA skill
 router.get('/patterns', async (_req, res) => {
-  const skillsPath = path.resolve(process.cwd(), '../skills/pomasa/pattern-catalog')
+  const skillsDir = await findSkillsDir()
+  if (!skillsDir) {
+    return res.json({ patterns: [] })
+  }
+
+  const skillsPath = path.join(skillsDir, 'pattern-catalog')
 
   try {
     const entries = await fs.readdir(skillsPath, { withFileTypes: true })
@@ -47,7 +73,12 @@ router.get('/patterns', async (_req, res) => {
 
 // Get generator prompt
 router.get('/generator', async (_req, res) => {
-  const generatorPath = path.resolve(process.cwd(), '../skills/pomasa/SKILL.md')
+  const skillsDir = await findSkillsDir()
+  if (!skillsDir) {
+    return res.status(404).json({ error: 'POMASA skills not found. Run this command from within a POMASA project directory.' })
+  }
+
+  const generatorPath = path.join(skillsDir, 'SKILL.md')
   try {
     const content = await fs.readFile(generatorPath, 'utf-8')
     res.json({ content })
@@ -58,8 +89,13 @@ router.get('/generator', async (_req, res) => {
 
 // Get user input template
 router.get('/template', async (_req, res) => {
-  const templatePath = path.resolve(process.cwd(), '../skills/pomasa/user_input_template.md')
-  const templatePathZh = path.resolve(process.cwd(), '../skills/pomasa/user_input_template_zh.md')
+  const skillsDir = await findSkillsDir()
+  if (!skillsDir) {
+    return res.status(404).json({ error: 'POMASA skills not found. Run this command from within a POMASA project directory.' })
+  }
+
+  const templatePath = path.join(skillsDir, 'user_input_template.md')
+  const templatePathZh = path.join(skillsDir, 'user_input_template_zh.md')
   try {
     let content
     try {

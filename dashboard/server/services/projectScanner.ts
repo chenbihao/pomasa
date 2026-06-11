@@ -28,7 +28,7 @@ export interface RunManifest {
 
 export interface PrepStage {
   id: string
-  label: string
+  labelKey: string
   state: 'done' | 'running' | 'pending'
   ts: string | null
   detail?: string
@@ -100,15 +100,15 @@ export async function detectPrepStages(projectPath: string): Promise<PrepStage[]
   } catch { /* not found */ }
 
   return [
-    { id: '0.1', label: '创建模板', state: s01done ? 'done' as const : 'pending' as const, ts: s01ts },
+    { id: '0.1', labelKey: 'pipeline.createTemplate', state: s01done ? 'done' as const : 'pending' as const, ts: s01ts },
     {
       id: '0.2',
-      label: blueprintState === 'done' ? '创建蓝图完成' : '创建蓝图',
+      labelKey: blueprintState === 'done' ? 'pipeline.createBlueprintDone' : 'pipeline.createBlueprint',
       state: (blueprintState === 'done' ? 'done' : orchExists ? 'running' : 'pending') as 'done' | 'pending' | 'running',
       ts: blueprintTs,
       detail: blueprintDetail,
     },
-    { id: '0.3', label: '结构创建完成', state: s04done ? 'done' as const : 'pending' as const, ts: s04ts },
+    { id: '0.3', labelKey: 'pipeline.structureCreated', state: s04done ? 'done' as const : 'pending' as const, ts: s04ts },
   ]
 }
 

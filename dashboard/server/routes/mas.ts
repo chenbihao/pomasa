@@ -1,7 +1,10 @@
 import { Router } from 'express'
 import path from 'path'
 import fs from 'fs/promises'
+import { fileURLToPath } from 'url'
 import { assertPathInsideBase, assertSafeMasName } from '../utils/paths.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const router = Router()
 
@@ -53,7 +56,7 @@ router.post('/create', async (req, res) => {
 
     // Read the template — pick Chinese or English based on UI language
     const templateFile = language === 'zh' ? 'user_input_template_zh.md' : 'user_input_template.md'
-    const templatePath = path.resolve(process.cwd(), 'templates', templateFile)
+    const templatePath = path.resolve(__dirname, '../../templates', templateFile)
     let template = await fs.readFile(templatePath, 'utf-8')
 
     const ui = userInput

@@ -4,9 +4,26 @@
 
 [ EN | [中文](./README.zh-cn.md) ]
 
-> Forked from [eXtremeProgramming-cn/pomasa](https://github.com/eXtremeProgramming-cn/pomasa). This is a personal fork; see the upstream repository for the original project.
+> Forked from [eXtremeProgramming-cn/pomasa](https://github.com/eXtremeProgramming-cn/pomasa). This fork extends the original with observability patterns and a web dashboard.
+
+## What's New in This Fork
+
+Compared to the upstream repository, this fork adds:
+
+- **[QUA-04 Observable Execution Logging](./skills/pomasa/pattern-catalog/QUA-04-observable-execution-logging.md)** — A new Quality pattern that defines how to persist structured event logs and agent state during a MAS run, enabling post-mortem debugging, live progress monitoring, and silent-degradation detection.
+- **[POMASA Dashboard](./dashboard/)** — A web-based control panel (React + TypeScript + Vite + Tailwind CSS) for visualizing and monitoring multi-agent system execution. Features include:
+  - Pipeline DAG visualization (ReactFlow)
+  - Real-time event timeline
+  - Embedded terminal (xterm.js + node-pty)
+  - Markdown viewer (Milkdown)
+  - i18n support (English / Chinese)
+  - CLI launcher (`npx @chenbihao/pomasa-dashboard`)
+
+  ![POMASA Dashboard](./images/dashboard.png)
 
 ## TL;DR
+
+Install POMASA as an agent skill
 
 ```bash
 npx add-skill chenbihao/pomasa
@@ -44,7 +61,7 @@ POMASA adopts a "pattern language + generator" approach:
 
 ### Architecture Overview
 
-![POMASA Architecture](./pomasa-explained-v2.1.jpg)
+![POMASA Architecture](./images/pomasa-explained-v2.1.jpg)
 
 POMASA patterns are organized into four categories (shown on the left), governing three architectural layers:
 
@@ -73,7 +90,11 @@ pomasa/
 │           ├── COR-01-...
 │           ├── STR-01-...
 │           ├── BHV-01-...
-│           └── QUA-01-...
+│           └── QUA-04-observable-execution-logging.md  # ← New in this fork
+├── dashboard/                    # ← New: Web dashboard (React + Vite)
+│   ├── src/                      #    Frontend source
+│   ├── server/                   #    Backend (Express + WebSocket)
+│   └── package.json
 └── references/                   # Background reading materials
     ├── declarative-multi-agent-architecture-part1-en.md
     └── declarative-multi-agent-architecture-part2-en.md
@@ -110,6 +131,16 @@ The agent will:
 2. Read the relevant patterns in pattern-catalog
 3. Select the appropriate pattern combination based on your needs
 4. Generate the complete system files
+
+### POMASA Dashboard
+
+Launch the web dashboard for visualizing and monitoring MAS execution:
+
+```bash
+npx @chenbihao/pomasa-dashboard
+```
+
+The dashboard will start at `http://localhost:3001`. Use `--port` to specify a custom port.
 
 ### Scenario: Understanding or Improving an Existing System
 

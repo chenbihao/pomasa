@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AlertTriangle, FileText, XCircle, BookOpen, FolderTree, Info, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
-import { getStatusConfig, levelColors } from '../theme/statusColors'
+import { getStatusConfig, levelColors, EVENT_I18N_KEYS, EVENT_STYLES } from '../theme/statusColors'
 import { usePageVisibility } from '../hooks/usePageVisibility'
 import { fetchManifest, fetchAgentStatuses, fetchEvents, fetchAgentLogs, fetchAgentBlueprints, fetchProjectFileTree, fetchProjectConfig, fetchFileContent } from '../api'
 import type { Manifest, AgentStatus, LogEvent, AgentBlueprint, ProjectConfig, FileNode } from '../types'
@@ -383,7 +383,7 @@ export default function ProjectDetailPage({ workDir }: ProjectDetailPageProps) {
                             )}
                             <div>
                               <div className={`text-xs font-medium ${stage.state === 'done' ? 'text-green-700' : stage.state === 'running' ? 'text-amber-700' : 'text-gray-500'}`}>
-                                {stage.id} {stage.label}
+                                {stage.id} {t(stage.labelKey)}
                                 {stage.detail && <span className="ml-1 text-gray-400">({stage.detail})</span>}
                               </div>
                               {stage.ts && (
@@ -735,13 +735,16 @@ export default function ProjectDetailPage({ workDir }: ProjectDetailPageProps) {
                     <div className="space-y-2">
                       {agentLogs.map((log, i) => {
                         const lc = levelColors[log.level] ?? levelColors.INFO
+                        const i18nKey = EVENT_I18N_KEYS[log.event]
+                        const eventLabel = i18nKey ? t(i18nKey) : log.event
+                        const eventStyle = EVENT_STYLES[log.event] ?? 'bg-gray-100 text-gray-600'
                         return (
                           <Card key={i} noPadding className="p-3">
                             <div className="flex items-center gap-2 mb-1">
                               <span className={`text-xs px-1.5 py-0.5 rounded font-mono ${lc.color} ${lc.bg}`}>
                                 {log.level}
                               </span>
-                              <span className="text-xs text-gray-500 font-mono">{log.event}</span>
+                              <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${eventStyle}`}>{eventLabel}</span>
                               <span className="flex-1" />
                               <span className="text-xs text-gray-400">
                                 {formatTime(log.ts)}

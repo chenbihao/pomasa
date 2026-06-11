@@ -84,7 +84,7 @@ function PrepNode({ data }: NodeProps) {
               <div className="w-4 h-4 rounded-full border-2 border-gray-300 flex-shrink-0" />
             )}
             <span className={`text-xs ${stage.state === 'done' ? 'text-green-700' : stage.state === 'running' ? 'text-amber-700' : 'text-gray-500'}`}>
-              {stage.label}
+              {t(stage.labelKey)}
               {stage.detail && <span className="ml-1 text-gray-400">({stage.detail})</span>}
             </span>
           </div>

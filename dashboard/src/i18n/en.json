@@ -71,7 +71,11 @@
     "orchestrator": "Orchestrator",
     "preparation": "Preparation",
     "done": "done",
-    "active": "active"
+    "active": "active",
+    "createTemplate": "Create Template",
+    "createBlueprint": "Creating Blueprint",
+    "createBlueprintDone": "Blueprint Created",
+    "structureCreated": "Structure Created"
   },
   "viewer": {
     "selectFile": "Select a file to view",
@@ -140,7 +144,15 @@
   "terminal": {
     "connected": "Connected",
     "disconnected": "Disconnected",
-    "reconnect": "Reconnect"
+    "reconnect": "Reconnect",
+    "newTab": "New Tab",
+    "search": "Search",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "theme": "Theme",
+    "copy": "Copy",
+    "paste": "Paste",
+    "clear": "Clear"
   },
   "status": {
     "pending": "Pending",
@@ -160,7 +172,13 @@
     "allLevels": "All levels",
     "eventsCount": "events",
     "noEvents": "No events",
-    "blueprint": "Blueprint"
+    "blueprint": "Blueprint",
+    "agentCall": "Agent Call",
+    "stageVerdict": "Stage Verdict",
+    "taskStart": "Task Start",
+    "taskDone": "Task Done",
+    "toolFallback": "Tool Fallback",
+    "error": "Error"
   },
   "workDir": {
     "notSet": "Not set",

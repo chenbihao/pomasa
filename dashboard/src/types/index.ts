@@ -16,7 +16,7 @@ export interface ProjectInfo {
 /** Preparation stage (detected by file existence before orchestrator starts) */
 export interface PrepStage {
   id: string
-  label: string
+  labelKey: string
   state: 'done' | 'running' | 'pending'
   ts: string | null
   detail?: string
