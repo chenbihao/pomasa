@@ -107,10 +107,25 @@ function spawnShell(ws: WebSocket, cwd: string, cols: number, rows: number): She
   return spawnWithChildProcess(ws, cwd)
 }
 
-export function setupTerminalWebSocket(server: Server) {
+export function setupTerminalWebSocket(server: Server, accessToken: string | null = null) {
   const wss = new WebSocketServer({ server, path: '/api/terminal' })
 
-  wss.on('connection', (ws: WebSocket) => {
+  wss.on('connection', (ws: WebSocket, req) => {
+    // Verify access token from cookie
+    if (accessToken) {
+      const cookieHeader = req.headers.cookie || ''
+      const cookies: Record<string, string> = {}
+      for (const pair of cookieHeader.split(';')) {
+        const [key, ...rest] = pair.split('=')
+        if (key && rest.length) {
+          cookies[key.trim()] = rest.join('=').trim()
+        }
+      }
+      if (cookies.pomasa_access !== accessToken) {
+        ws.close(4001, 'Unauthorized')
+        return
+      }
+    }
     let shellProcess: ShellProcess | null = null
 
     ws.on('message', (data: Buffer) => {
