@@ -26,7 +26,7 @@ Compared to the upstream repository, this fork adds:
 Install POMASA as an agent skill
 
 ```bash
-npx add-skill chenbihao/pomasa
+npx skills add chenbihao/pomasa
 ```
 
 Then just tell your AI client (e.g. Claude Code or Codex):
@@ -107,7 +107,7 @@ pomasa/
 Install POMASA as an agent skill for Claude Code, Cursor, Cline, and other compatible agents:
 
 ```bash
-npx add-skill chenbihao/pomasa
+npx skills add chenbihao/pomasa
 ```
 
 After installation, simply tell the agent what you want:

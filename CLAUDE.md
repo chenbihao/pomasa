@@ -63,3 +63,5 @@ TODO.md                        # 待办清单
 ## 提交与文档约定
 
 - 改动模式或生成流程时，优先保证**模式文档之间的内部一致性**（编号、关系图、版本历史、SKILL.md 引用），这比任何单个文件的措辞都重要。
+- 修改 `skills/pomasa/user_input_template.md` 或 `user_input_template_zh.md` 时，必须同步更新 `dashboard/templates/` 下的同名副本（含 `{{PLACEHOLDER}}` 占位符版本）。两处模板内容应保持一致，仅占位符写法不同。
+- 更新版本号时，须同步 `skills/pomasa/SKILL.md` 的 `metadata.version` 与 `dashboard/package.json` 的 `version`。对应关系：SKILL.md 的 `M.NN` 对应 package.json 的 `1.M.NN`（如 `0.16` → `1.0.16`）。

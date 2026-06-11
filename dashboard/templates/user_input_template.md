@@ -103,13 +103,13 @@ The Generator creates `config.yml` (holding this level) and `_observation/manage
 
 ---
 
-## Output-Format Presets (reference)
+## Output Style (reference)
 
-These are not fields to fill in. When the output format implies a particular writing style, the Generator applies the matching preset during Phase 0 intake. Treat them as starting points and adjust per topic.
+This is not a field to fill in. When the output format implies a particular writing style, the Generator loads the matching guideline from `writing-guidelines/` and injects it into `output-template.md`'s `## Writing Style` section during generation. If no matching guideline exists, determine the writing style during Phase 0 brainstorming based on the topic and audience.
 
-### Preset: Research Report / Technical Analysis
-
-No fixed style preset—determine the writing style during the Phase 0 brainstorming step, appropriate to the topic and audience.
+Available guidelines:
+- Research Report / Technical Analysis → no fixed style (determined in Phase 0)
+- 公众号文章 → `writing-guidelines/wechat-article.md`
 
 ---
 

@@ -57,7 +57,7 @@ Interactively design the contents of `user_input_template.md`:
 - **output-format positioning** — article / research report / technical analysis / comparative evaluation / progressively-deepening technical book, etc. (decide this here)
 - pattern selection
 
-When the output format implies a writing style, apply the matching preset from the **Output-Format Presets** appendix in `user_input_template.md`—the WeChat-article style is one such preset, alongside research-report and technical-analysis styles—adjusting for the specific topic. Do not hardcode style content into this workflow.
+When the output format implies a writing style, check `writing-guidelines/` for a matching guideline. If found, load it and inject into `output-template.md`'s `## Writing Style` section during generation. If not found, determine the writing style during this brainstorming step based on the topic and audience.
 
 **Step 0.3 — Write the input file**
 
