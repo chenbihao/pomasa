@@ -60,3 +60,4 @@ QUA-04 把 journal 定性为 "best-effort observability, **never a control plane
 **触发条件**：当出现"长流程频繁因中断而整轮重跑"的实际痛点，或 STR-10 落地后即可一并规划。
 
 ---
+

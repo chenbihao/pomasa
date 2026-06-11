@@ -1,6 +1,20 @@
 #!/usr/bin/env node
 
+import os from 'os'
 import { startServer } from './setup.js'
+
+function getLanIp(): string | null {
+  const interfaces = os.networkInterfaces()
+  for (const iface of Object.values(interfaces)) {
+    if (!iface) continue
+    for (const info of iface) {
+      if (info.family === 'IPv4' && !info.internal) {
+        return info.address
+      }
+    }
+  }
+  return null
+}
 
 // Prevent crashes from taking down the process silently
 process.on('uncaughtException', (err) => {
@@ -34,24 +48,27 @@ const noToken = process.argv.includes('--no-token') || !!process.env.NO_TOKEN
 
 // Start server, then open browser
 startServer(port, host, { token: !noToken }).then(async ({ accessToken }) => {
-  const displayHost = host === '0.0.0.0' ? 'localhost' : host
-  const baseUrl = `http://${displayHost}:${port}`
-  const url = accessToken ? `${baseUrl}/?token=${accessToken}` : baseUrl
+  const lanIp = host === '0.0.0.0' ? getLanIp() : null
+  const localUrl = `http://localhost:${port}`
+  const openUrl = accessToken ? `${localUrl}/?token=${accessToken}` : localUrl
 
-  console.log(`POMASA Dashboard running at ${baseUrl}`)
-  if (accessToken) {
-    console.log(`Access token: ${accessToken}`)
-    console.log(`Full URL (with token): ${url}`)
+  console.log()
+  console.log(`  POMASA Dashboard`)
+  console.log(`  ─────────────────`)
+  console.log(`  ➜  Local:   ${localUrl}${accessToken ? `/?token=${accessToken}` : ''}`)
+  if (lanIp) {
+    console.log(`  ➜  Network: http://${lanIp}:${port}${accessToken ? `/?token=${accessToken}` : ''}`)
   }
-  console.log(`API at ${baseUrl}/api`)
-  console.log(`WebSocket terminal at ws://${displayHost}:${port}/api/terminal`)
+  if (accessToken) {
+    console.log(`  ➜  Token:   ${accessToken}`)
+  }
+  console.log()
 
   try {
     const open = (await import('open')).default
-    await open(url)
-    console.log(`Opened in browser`)
+    await open(openUrl)
   } catch {
-    console.log(`Please open ${url} in your browser`)
+    console.log(`  Open ${openUrl} in your browser`)
   }
 }).catch((err) => {
   console.error('Failed to start server:', err)
