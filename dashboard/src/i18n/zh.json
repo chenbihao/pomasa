@@ -187,5 +187,13 @@
   "common": {
     "save": "保存",
     "cancel": "取消"
+  },
+  "refresh": {
+    "autoRefresh": "自动刷新",
+    "interval": "刷新间隔",
+    "enabled": "自动刷新已开启",
+    "disabled": "自动刷新已关闭",
+    "on": "开启",
+    "off": "关闭"
   }
 }

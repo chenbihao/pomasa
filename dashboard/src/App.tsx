@@ -2,6 +2,7 @@ import { BrowserRouter, useLocation } from 'react-router-dom'
 import TabNav from './components/TabNav'
 import WorkDirSelector from './components/WorkDirSelector'
 import LanguageSwitcher from './components/LanguageSwitcher'
+import RefreshControl from './components/RefreshControl'
 import ErrorBoundary from './components/ErrorBoundary'
 import DashboardPage from './pages/DashboardPage'
 import ViewerPage from './pages/ViewerPage'
@@ -53,6 +54,7 @@ export default function App() {
               <TabNav />
             </div>
             <div className="flex items-center gap-2">
+              <RefreshControl />
               <WorkDirSelector />
               <LanguageSwitcher />
             </div>

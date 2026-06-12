@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { LayoutDashboard, AlertTriangle } from 'lucide-react'
 import { getStatusConfig } from '../theme/statusColors'
 import { usePageVisibility } from '../hooks/usePageVisibility'
+import { useRefreshSettings } from '../stores/useRefreshSettings'
 import { fetchProjects } from '../api'
 import type { ProjectInfo } from '../types'
 import Card from '../components/Card'
@@ -16,6 +17,7 @@ export default function DashboardPage({ workDir }: DashboardPageProps) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const isVisible = usePageVisibility()
+  const { enabled, interval: refreshInterval } = useRefreshSettings()
   const [projects, setProjects] = useState<ProjectInfo[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -40,10 +42,10 @@ export default function DashboardPage({ workDir }: DashboardPageProps) {
 
   useEffect(() => {
     loadProjects()
-    if (!isVisible) return
-    const interval = setInterval(loadProjects, 10000)
-    return () => clearInterval(interval)
-  }, [loadProjects, isVisible])
+    if (!isVisible || !enabled) return
+    const id = setInterval(loadProjects, refreshInterval)
+    return () => clearInterval(id)
+  }, [loadProjects, isVisible, enabled, refreshInterval])
 
   const stats = useMemo(() => ({
     total: projects.length,

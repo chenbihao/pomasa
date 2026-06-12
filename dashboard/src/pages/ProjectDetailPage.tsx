@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { AlertTriangle, FileText, XCircle, BookOpen, FolderTree, Info, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react'
 import { getStatusConfig, levelColors, EVENT_I18N_KEYS, EVENT_STYLES } from '../theme/statusColors'
 import { usePageVisibility } from '../hooks/usePageVisibility'
+import { useRefreshSettings } from '../stores/useRefreshSettings'
 import { fetchManifest, fetchAgentStatuses, fetchEvents, fetchAgentLogs, fetchAgentBlueprints, fetchProjectFileTree, fetchProjectConfig, fetchFileContent } from '../api'
 import type { Manifest, AgentStatus, LogEvent, AgentBlueprint, ProjectConfig, FileNode } from '../types'
 import PipelineDAG from '../components/PipelineDAG'
@@ -38,6 +39,7 @@ export default function ProjectDetailPage({ workDir }: ProjectDetailPageProps) {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const isVisible = usePageVisibility()
+  const { enabled, interval: refreshInterval } = useRefreshSettings()
 
   const name = useMemo(() => {
     const match = location.pathname.match(/^\/project\/(.+)$/)
@@ -113,10 +115,10 @@ export default function ProjectDetailPage({ workDir }: ProjectDetailPageProps) {
 
   useEffect(() => {
     fetchData()
-    if (!isVisible) return
-    const interval = setInterval(fetchData, 5000)
-    return () => clearInterval(interval)
-  }, [fetchData, isVisible])
+    if (!isVisible || !enabled) return
+    const id = setInterval(fetchData, refreshInterval)
+    return () => clearInterval(id)
+  }, [fetchData, isVisible, enabled, refreshInterval])
 
   const handleNodeClick = (nodeId: string) => {
     setFitViewTrigger(prev => prev + 1)

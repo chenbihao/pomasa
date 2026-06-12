@@ -187,5 +187,13 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel"
+  },
+  "refresh": {
+    "autoRefresh": "Auto Refresh",
+    "interval": "Interval",
+    "enabled": "Auto refresh enabled",
+    "disabled": "Auto refresh disabled",
+    "on": "ON",
+    "off": "OFF"
   }
 }

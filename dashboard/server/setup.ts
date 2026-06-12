@@ -115,8 +115,20 @@ export function createApp(options: { token?: boolean } = {}) {
   })
 
   // SPA fallback: all non-/api routes → index.html
-  app.get('/{*splat}', (_req, res) => {
-    res.sendFile(path.join(distDir, 'index.html'))
+  app.get('/{*splat}', (req, res, next) => {
+    const indexPath = path.join(distDir, 'index.html')
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error(`[SPA fallback] Failed to serve ${indexPath} for ${req.path}: ${err.message}`)
+        next(err)
+      }
+    })
+  })
+
+  // Error handler
+  app.use((err: Error & { status?: number }, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    const status = err.status || 500
+    res.status(status).json({ error: err.message || 'Internal Server Error' })
   })
 
   return { app, server, accessToken }
