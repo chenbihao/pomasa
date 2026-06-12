@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import crypto from 'crypto'
+import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { createServer, type Server } from 'http'
@@ -115,14 +116,22 @@ export function createApp(options: { token?: boolean } = {}) {
   })
 
   // SPA fallback: all non-/api routes → index.html
-  app.get('/{*splat}', (req, res, next) => {
-    const indexPath = path.join(distDir, 'index.html')
-    res.sendFile(indexPath, (err) => {
-      if (err) {
-        console.error(`[SPA fallback] Failed to serve ${indexPath} for ${req.path}: ${err.message}`)
-        next(err)
-      }
-    })
+  // Note: using fs.readFileSync instead of sendFile to avoid a mysterious
+  // NotFoundError on Linux (Mint) where sendFile fails despite the file existing.
+  const indexPath = path.join(distDir, 'index.html')
+  let indexHtml: string | null = null
+  try {
+    indexHtml = fs.readFileSync(indexPath, 'utf-8')
+  } catch (e) {
+    console.error(`[SPA fallback] Cannot read ${indexPath}: ${(e as Error).message}`)
+  }
+
+  app.get('/{*splat}', (_req, res) => {
+    if (indexHtml) {
+      res.type('html').send(indexHtml)
+    } else {
+      res.status(500).json({ error: 'index.html not found' })
+    }
   })
 
   // Error handler

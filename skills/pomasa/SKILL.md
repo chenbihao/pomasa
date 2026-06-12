@@ -9,7 +9,7 @@ description: >
 license: Apache-2.0
 metadata:
   author: eXtremeProgramming-cn
-  version: "0.18"
+  version: "0.19"
 ---
 
 # POMASA Generator
