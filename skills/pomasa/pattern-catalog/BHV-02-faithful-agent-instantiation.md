@@ -13,6 +13,8 @@ In multi-agent systems, an Orchestrator needs to invoke other Agents to execute 
 
 2. **Task Batching**: During batch execution, multiple tasks that should be independent are packaged into a single subagent invocation. This prevents each task from receiving the execution quality it deserves.
 
+3. **Oversized Task Dispatch**: A single task that is too broad or complex is dispatched to a subagent without decomposition. The subagent may hit execution time limits, produce shallow results, or fail midway—leaving the Orchestrator with no usable partial output.
+
 These practices may cause minor issues in short call chains, but lead to severe quality degradation in long call chains or high-volume batch tasks.
 
 ## Context
@@ -59,6 +61,12 @@ This pattern applies to the following scenarios:
    - Completion criteria in the Blueprint are hard requirements; subagent must not lower them on its own
    - When encountering difficulties, must consult the Orchestrator; the Orchestrator decides whether to adjust
    - "Trial runs" can only reduce task scope, not lower quality standards
+
+6. **Decompose Before Dispatch to Fit Execution Constraints**
+   - Subagent execution has time limits. Before dispatching, the Orchestrator should assess task complexity and scope
+   - If a task is likely to exceed execution limits, decompose it into smaller, independently completable sub-tasks
+   - Each sub-task should produce a usable partial result on its own—so that even if one sub-task fails or times out, the others remain valid
+   - Decomposition is the Orchestrator's responsibility, not the subagent's. Do not hand a vague "do everything" instruction and hope the subagent figures out how to pace itself
 
 ## Consequences
 
@@ -135,6 +143,28 @@ Launch one subagent to complete research for the following 5 function items:
 - Function item 1.4
 - Function item 1.5
 (Should launch independent subagent for each function item)
+```
+
+**Anti-pattern 3: Oversized Task Dispatch**
+
+```markdown
+❌ Incorrect:
+Launch subagent to research the entire AI industry landscape:
+- Market size and growth trends
+- All major players and their strategies
+- Technology stack comparison
+- Regulatory environment across 10 countries
+- Investment trend analysis
+- Future outlook with 5 scenarios
+(Too broad for a single subagent; will likely timeout or produce shallow results)
+
+✅ Correct:
+Decompose into focused sub-tasks, each dispatched independently:
+- Sub-task 1: Market size and growth trends (data collection + analysis)
+- Sub-task 2: Major players profile (top 5 companies, strategy summary)
+- Sub-task 3: Technology stack comparison (matrix of 3 key dimensions)
+- Sub-task 4: Regulatory environment (group by region, not by country)
+Each sub-task produces a standalone artifact that can be assembled later.
 ```
 
 ### Correct Handling of Batch Tasks
@@ -279,6 +309,12 @@ When designing an Orchestrator, check the following points:
 - [ ] For batch tasks, does each task launch an independent subagent?
 - [ ] Is the Blueprint file path clearly specified in the invocation instruction?
 - [ ] Are parameters correctly passed in the invocation instruction?
+
+### Task Granularity
+- [ ] Has each task been assessed for complexity before dispatch?
+- [ ] Are tasks that are too broad decomposed into smaller, independently completable sub-tasks?
+- [ ] Can each sub-task produce a usable partial result on its own?
+- [ ] Is the decomposition done by the Orchestrator, rather than delegated to the subagent?
 
 ### Verification Side
 - [ ] When receiving results, is verification performed item by item against Blueprint completion criteria?

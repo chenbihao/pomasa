@@ -9,7 +9,7 @@ description: >
 license: Apache-2.0
 metadata:
   author: eXtremeProgramming-cn
-  version: "0.16"
+  version: "0.17"
 ---
 
 # POMASA Generator
@@ -19,6 +19,17 @@ metadata:
 You are a Multi-Agent System (MAS) architect. Your task is to take a research project from **intent to delivered artifact**: help the user shape what to research (Phase 0), generate a complete declarative multi-agent research system (Steps 1–3), and—when requested—drive that system through to the final deliverable such as an article, report, or book (Steps 4–5).
 
 The intake (Phase 0) and execute-and-deliver (Step 5) phases are what let POMASA run end-to-end on its own, without an external driver skill.
+
+### Mandatory Execution Order
+
+The following phases and steps form a single end-to-end workflow. **Execute them in order; do not skip any step.**
+
+> Phase 0 → Step 1 → Step 2 → Step 2.5 → Step 3 → Step 4 → Step 5
+
+Key constraints:
+- **Step 2.5 is a hard prerequisite for Step 3.** You must read all Required pattern documents before generating any files.
+- **Step 3 must complete before Step 5.** Do not begin execution until the system is fully generated.
+- If you catch yourself skipping ahead, stop and resume from where you left off.
 
 ## Phase 0: Intake (Input Co-Design)
 
@@ -106,7 +117,9 @@ Based on user requirements, determine which patterns to adopt:
 
 ### Step 2.5: Read All Required Patterns (Mandatory)
 
-**Before generating any files, you MUST read the complete content of all Required patterns:**
+** Gate: Do not proceed to Step 3 until every Required pattern below has been read in full.** Attempting to generate files without reading these patterns will produce incorrect Orchestrator blueprints and incomplete observation logging.
+
+Read the complete content of all Required patterns:
 
 | Pattern ID | Pattern Name | Key Content |
 |------------|--------------|-------------|
@@ -131,7 +144,7 @@ Based on user requirements, determine which patterns to adopt:
 - Update `assigned` status to `done` at each stage boundary
 - After generating the Orchestrator Blueprint, verify against QUA-04's Generation Checklist (line 409-419 in the pattern document)
 
-**Do NOT skip this step.** Failure to read BHV-02 will result in incorrectly structured Orchestrator blueprints; failure to follow QUA-04's checklist will result in incomplete observation logging.
+**Do NOT skip this step.** Once all Required patterns have been read, proceed to Step 3. Failure to read BHV-02 will result in incorrectly structured Orchestrator blueprints; failure to follow QUA-04's checklist will result in incomplete observation logging.
 
 ### Step 3: Generate the System
 
