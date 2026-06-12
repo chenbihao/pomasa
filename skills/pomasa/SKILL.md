@@ -131,6 +131,11 @@ Read the complete content of all Required patterns:
 | QUA-03 | Verifiable Data Lineage | Data traceability requirements |
 | QUA-04 | Observable Execution Logging | Observability Level (`none`/`minimal`/`normal`/`detailed`) is independent from QA level; generate `config.yml`, copy `_observation/manager.sh` verbatim, add `## Observation` section to every Blueprint; recorder: `init` (directory tree + manifest) and `checkpoint` (unified event + optional state snapshot); `_fallback/` catches unrecognized keys |
 
+**Handling Read Dedup**: Some runtimes deduplicate file reads—if a file was already read earlier in the session, a subsequent read may return a "file unchanged" notice instead of actual content. To avoid this:
+
+1. **Read the 7 Required patterns first**, before reading any other pattern files or README. This minimizes the chance that earlier reads (e.g., Step 2's `pattern-catalog/README.md`) trigger dedup on these critical files.
+2. **If any read returns dedup/no content**, re-read that file using an alternative method (e.g., `cat` via shell) to guarantee the content is in your context before proceeding to Step 3.
+
 **Special Emphasis on BHV-02**: This pattern defines the standard format for how the Orchestrator invokes subagents:
 - Caller only passes parameters, never paraphrases Blueprint content
 - One task instance = One subagent invocation
