@@ -119,6 +119,8 @@ Please launch a subagent to execute the following task:
    - FUNCTION_ID: xxx
 ```
 
+**Skill Assignment**: If the runtime requires explicit skill delegation (assigning tools or capabilities to subagents at invocation time), the Orchestrator should pass the necessary skills along with each invocation. Refer to [COR-02 Intelligent Runtime](./COR-02-intelligent-runtime.md) for how runtimes manage agent capabilities.
+
 ### Incorrect Invocation Methods
 
 **Anti-pattern 1: Summarized Paraphrasing**

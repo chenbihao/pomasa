@@ -98,6 +98,7 @@ Claude Code is one implementation of intelligent runtime. Other AI coding assist
 - Launch subagents (Agent instances)
 - Launch multiple subagents in the same message for parallelism
 - Each subagent has independent context
+- Assign skills (tools, capabilities) to subagents as required by the runtime—some runtimes require explicit skill delegation at invocation time; Blueprints should declare which skills each agent needs
 
 **Intelligent Decision-making**:
 - Understand natural language Blueprints
